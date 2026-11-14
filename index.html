@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ur"><head><meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0f8a80">
 <title>FATIMA·TECH Scanner</title>
@@ -44,16 +44,16 @@ canvas#view{display:inline-block;width:auto;height:auto;max-width:100%;max-heigh
 #fx{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;z-index:9}#fx>div{background:var(--c);border-radius:20px 20px 0 0;padding:14px;width:100%;max-width:480px;max-height:92vh;overflow:auto}#view.sel{outline:3px solid #e11;touch-action:none}
 .fi{flex:none;width:78px;text-align:center;font-size:12px;border:2px solid transparent;border-radius:12px;padding:3px;cursor:pointer}.fi.on{border-color:var(--t);color:var(--t);font-weight:700}.fi canvas{width:70px;height:96px;border-radius:8px;border:1px solid var(--ln)}
 </style></head><body>
-<header><div class="logo">F</div><div><h1>FATIMA·TECH</h1><small>Scanner aur PDF Tools</small></div></header>
+<header><div class="logo">F</div><div><h1>FATIMA·TECH</h1><small>Scanner and PDF Tools</small></div></header>
 
 <div class="card">
-  <h2>Naya page lein</h2>
+  <h2>Add a page</h2>
   <video id="cam" playsinline muted class="hide"></video>
   <div class="row" style="margin-top:8px">
-    <button class="main" id="bCam">Camera kholein</button>
-    <button class="main hide" id="bSnap">Photo khainchein</button>
-    <label class="btn main" style="margin:0;text-align:center">PDF / file kholein<input type="file" id="fPdf" accept="application/pdf,image/*" multiple hidden></label>
-    <label class="btn" style="margin:0;text-align:center">Gallery se lein<input type="file" id="fImg" accept="image/*" multiple hidden></label>
+    <button class="main" id="bCam">Open camera</button>
+    <button class="main hide" id="bSnap">Take photo</button>
+    <label class="btn main" style="margin:0;text-align:center">Open PDF / file<input type="file" id="fPdf" accept="application/pdf,image/*" multiple hidden></label>
+    <label class="btn" style="margin:0;text-align:center">From gallery<input type="file" id="fImg" accept="image/*" multiple hidden></label>
   </div>
 </div>
 
@@ -61,62 +61,62 @@ canvas#view{display:inline-block;width:auto;height:auto;max-width:100%;max-heigh
   <h2>Pages (<span id="cnt">0</span>)</h2>
   <div class="ed"><div class="vcol">
   <div id="strip"></div>
-  <div class="zb"><button id="zOut">−</button><button id="zFit">Fit</button><button id="zIn">+</button><span>Ctrl + mouse wheel se bhi zoom hota hai</span></div>
+  <div class="zb"><button id="zOut">−</button><button id="zFit">Fit</button><button id="zIn">+</button><span>You can also zoom with Ctrl + mouse wheel</span></div>
   <div id="vw"><canvas id="view"></canvas></div></div><div class="ccol">
   <div id="fl" style="display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:4px"></div>
-  <button id="bCmp" style="width:100%;margin-top:6px">Asal se muqabla (dabaye rakhein)</button>
+  <button id="bCmp" style="width:100%;margin-top:6px">Compare with original (hold)</button>
   <label>Contrast: <b id="sKv">50</b></label><input type="range" id="sK" min="0" max="100" value="50">
   <label>Brightness: <b id="sBv">50</b></label><input type="range" id="sB" min="0" max="100" value="50">
   <label>Details: <b id="sDv">99</b></label><input type="range" id="sD" min="0" max="100" value="99">
-  <label>Upar se crop</label><input type="range" id="cT" min="0" max="45" value="0">
-  <label>Neeche se crop</label><input type="range" id="cB" min="0" max="45" value="0">
-  <label>Left se crop</label><input type="range" id="cL" min="0" max="45" value="0">
-  <label>Right se crop</label><input type="range" id="cR" min="0" max="45" value="0">
+  <label>Crop from top</label><input type="range" id="cT" min="0" max="45" value="0">
+  <label>Crop from bottom</label><input type="range" id="cB" min="0" max="45" value="0">
+  <label>Crop from left</label><input type="range" id="cL" min="0" max="45" value="0">
+  <label>Crop from right</label><input type="range" id="cR" min="0" max="45" value="0">
   <div class="row" style="margin-top:10px">
-    <button id="bFix" class="main">Page seedha karein</button><button id="bAuto">Auto crop</button><button id="bRot">Ghumao</button>
-    <button id="bSign">Signature</button><button id="bText">Likhein</button>
-    <button id="bFx" class="main">Text theek karein</button><button id="bDel">Page hatao</button>
+    <button id="bFix" class="main">Straighten page</button><button id="bAuto">Auto crop</button><button id="bRot">Rotate</button>
+    <button id="bSign">Signature</button><button id="bText">Add text</button>
+    <button id="bFx" class="main">Fix text</button><button id="bDel">Delete page</button>
   </div>
   </div></div>
 </div>
 
 <div class="card hide" id="pdfc">
-  <h2>PDF banayein</h2>
-  <label>File ka naam</label><input type="text" id="name" value="Scan">
-  <label>Password (khali = bina password)</label><input type="password" id="pw" autocomplete="new-password">
-  <div class="row" style="margin-top:10px"><button class="main" id="bPdf">PDF save karein</button><button id="bShare">Share</button></div>
-  <div class="row" style="margin-top:8px"><select id="ifmt" style="flex:0 0 90px"><option value="jpeg">JPG</option><option value="png">PNG</option></select><button id="bImg">Ye page tasveer mein</button><button id="bImgAll">Sab pages tasveer mein</button></div>
+  <h2>Create PDF</h2>
+  <label>File name</label><input type="text" id="name" value="Scan">
+  <label>Password (leave empty for none)</label><input type="password" id="pw" autocomplete="new-password">
+  <div class="row" style="margin-top:10px"><button class="main" id="bPdf">Save PDF</button><button id="bShare">Share</button></div>
+  <div class="row" style="margin-top:8px"><select id="ifmt" style="flex:0 0 90px"><option value="jpeg">JPG</option><option value="png">PNG</option></select><button id="bImg">Save page as image</button><button id="bImgAll">Save all pages as images</button></div>
 </div>
 
 <div class="card hide" id="ocrc">
-  <h2>Tasveer se text (OCR)</h2>
+  <h2>Text from image (OCR)</h2>
   <select id="lang"><option value="eng">English</option><option value="urd">Urdu</option><option value="eng+urd">English + Urdu</option></select>
-  <div class="row" style="margin-top:8px"><button class="main" id="bOcr">Is page ka text nikalein</button><button id="bCopy">Copy</button></div>
-  <textarea id="txt" style="margin-top:8px" placeholder="Text yahan aayega"></textarea>
+  <div class="row" style="margin-top:8px"><button class="main" id="bOcr">Extract text from this page</button><button id="bCopy">Copy</button></div>
+  <textarea id="txt" style="margin-top:8px" placeholder="Text will appear here"></textarea>
 </div>
 
 <div class="card">
   <h2>PDF Merge</h2>
   <input type="file" id="mf" accept="application/pdf" multiple>
-  <button class="main" id="bMerge" style="margin-top:8px;width:100%">Jorh kar ek PDF banayein</button>
+  <button class="main" id="bMerge" style="margin-top:8px;width:100%">Merge into one PDF</button>
 </div>
 <div class="card">
   <h2>PDF Split</h2>
   <input type="file" id="sf" accept="application/pdf">
-  <label>Pages (jaise 1-3,5)</label><input type="text" id="rng" placeholder="1-3,5">
-  <button class="main" id="bSplit" style="margin-top:8px;width:100%">Chunay hue pages alag karein</button>
+  <label>Pages (e.g. 1-3,5)</label><input type="text" id="rng" placeholder="1-3,5">
+  <button class="main" id="bSplit" style="margin-top:8px;width:100%">Extract selected pages</button>
 </div>
 
-<div id="fx"><div><h2>Text theek karein</h2>
+<div id="fx"><div><h2>Fix text</h2>
 <canvas id="fxp" style="width:100%;border-radius:10px;border:1px solid var(--ln)"></canvas>
-<label>Jo likha hona chahiye (asal mein jo likha hai wahi)</label><input type="text" id="fxt">
-<label>Font</label><select id="fxf"><option value="sans">Sans (Arial jaisa)</option><option value="serif">Serif (Times jaisa)</option><option value="mono">Typewriter / dot-matrix (Courier jaisa)</option></select>
+<label>Correct text (exactly what the original says)</label><input type="text" id="fxt">
+<label>Font</label><select id="fxf"><option value="sans">Sans (Arial-like)</option><option value="serif">Serif (Times-like)</option><option value="mono">Typewriter / dot-matrix (Courier-like)</option></select>
 <label>Size: <b id="fxsv">100</b>%</label><input type="range" id="fxs" min="50" max="140" value="100">
-<label><input type="checkbox" id="fxn"> Sirf numbers parhein</label>
-<label><input type="checkbox" id="fxb"> Mota (bold)</label>
-<div class="row" style="margin-top:10px"><button id="fxc">Wapas</button><button id="fxr">Dobara parhein</button><button class="main" id="fxo">Lagayein</button></div></div></div>
-<div id="sig"><div><h2>Signature karein</h2><canvas id="pad"></canvas>
-<div class="row" style="margin-top:10px"><button id="sClr">Saaf</button><button id="sNo">Wapas</button><button class="main" id="sOk">Page par lagayein</button></div></div></div>
+<label><input type="checkbox" id="fxn"> Read numbers only</label>
+<label><input type="checkbox" id="fxb"> Bold</label>
+<div class="row" style="margin-top:10px"><button id="fxc">Cancel</button><button id="fxr">Read again</button><button class="main" id="fxo">Apply</button></div></div></div>
+<div id="sig"><div><h2>Draw signature</h2><canvas id="pad"></canvas>
+<div class="row" style="margin-top:10px"><button id="sClr">Clear</button><button id="sNo">Cancel</button><button class="main" id="sOk">Place on page</button></div></div></div>
 <div id="toast"></div>
 
 <script>
@@ -131,11 +131,11 @@ $('#bCam').onclick=async()=>{
   try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920}}});
   const v=$('#cam');v.srcObject=stream;v.classList.remove('hide');await v.play();
   $('#bSnap').classList.remove('hide');$('#bCam').classList.add('hide')}
-  catch(e){toast('Camera nahi khula. Permission den ya Gallery use karein.')}
+  catch(e){toast('Camera could not open. Allow permission or use Gallery.')}
 };
 $('#bSnap').onclick=()=>{
   const v=$('#cam'),c=mk(v.videoWidth,v.videoHeight);c.getContext('2d').drawImage(v,0,0);
-  addPage(c,true);toast('Page shamil hua')
+  addPage(c,true);toast('Page added')
 };
 $('#fImg').onchange=async e=>{
   for(const f of e.target.files){
@@ -260,26 +260,26 @@ function warp(cv,B,q){
   [src,dst,a,b,M].forEach(m=>m.delete());return o
 }
 async function fix(p,silent){
-  try{if(!silent)toast('Page ke kone dhoondh raha hai... (pehli baar thora waqt lagta hai)');
+  try{if(!silent)toast('Finding page corners... (first time takes a moment)');
     await loadCV();const q=quad(window.cv,p.base);
-    if(!q){if(!silent)toast('Page ke kone nahi mile. Sliders se crop karein.');return}
-    p.base=warp(window.cv,p.base,q);p.c=[0,0,0,0];p.v++;show();if(!silent)toast('Page seedha ho gaya')}
-  catch(e){if(!silent)toast('OpenCV load nahi hua. Internet check karein.')}
+    if(!q){if(!silent)toast('Could not find page corners. Use the crop sliders.');return}
+    p.base=warp(window.cv,p.base,q);p.c=[0,0,0,0];p.v++;show();if(!silent)toast('Page straightened')}
+  catch(e){if(!silent)toast('OpenCV failed to load. Check your internet.')}
 }
 $('#bFix').onclick=()=>{if(P.length)fix(P[cur],false)};
-/* ---- Text theek karein: dabba chuno, system parhe, font mila kar wahi text dobara likhe ---- */
+/* ---- Fix text: dabba chuno, system parhe, font mila kar wahi text dobara likhe ---- */
 const FONTS={sans:'Arial, Helvetica, sans-serif',serif:'Times New Roman, serif',mono:'Courier New, monospace'};
 let sel=false,drag=null,S=null;const V=$('#view');
 const vpt=e=>{const r=V.getBoundingClientRect();return[(e.clientX-r.left)*V.width/r.width,(e.clientY-r.top)*V.height/r.height]};
 const rc=d=>[Math.min(d.a[0],d.b[0]),Math.min(d.a[1],d.b[1]),Math.abs(d.a[0]-d.b[0]),Math.abs(d.a[1]-d.b[1])];
-$('#bFx').onclick=()=>{sel=true;V.classList.add('sel');V.scrollIntoView({block:'center'});toast('Jo text saaf nahi, us par ungli se dabba banayein')};
+$('#bFx').onclick=()=>{sel=true;V.classList.add('sel');V.scrollIntoView({block:'center'});toast('Draw a box over the unclear text')};
 V.onpointerdown=e=>{if(!sel)return;drag={a:vpt(e),b:vpt(e)};V.setPointerCapture(e.pointerId)};
 V.onpointermove=e=>{if(!drag)return;drag.b=vpt(e);const x=V.getContext('2d');x.drawImage(render(P[cur]),0,0);
   x.strokeStyle='#e11';x.lineWidth=Math.max(2,V.width/250);x.strokeRect(...rc(drag))};
 V.onpointerup=()=>{if(!drag)return;const d=drag;drag=null;sel=false;V.classList.remove('sel');openFx(d)};
 async function openFx(d){
   const p=P[cur],[x,y,w,h]=rc(d),ox=p.base.width*p.c[2]/100,oy=p.base.height*p.c[0]/100;
-  if(w<8||h<8){show();return toast('Dabba bohat chhota hai')}
+  if(w<8||h<8){show();return toast('The box is too small')}
   S={x:Math.round(x+ox),y:Math.round(y+oy),w:Math.round(w),h:Math.round(h)};
   S.x=Math.max(0,S.x);S.y=Math.max(0,S.y);S.w=Math.min(S.w,p.base.width-S.x);S.h=Math.min(S.h,p.base.height-S.y);
   const dt=p.base.getContext('2d').getImageData(S.x,S.y,S.w,S.h).data,n=S.w*S.h,L=new Float32Array(n);
@@ -298,14 +298,14 @@ async function openFx(d){
   $('#fxt').value='';$('#fx').style.display='flex';fxPrev();await fxRead()
 }
 async function fxRead(){
-  const b=$('#fxr');b.disabled=true;b.textContent='Parh raha hai...';
+  const b=$('#fxr');b.disabled=true;b.textContent='Reading...';
   try{const c=mk(S.w*2,S.h*2);c.getContext('2d').drawImage(P[cur].base,S.x,S.y,S.w,S.h,0,0,c.width,c.height);
     const w=await Tesseract.createWorker('eng'),o={tessedit_pageseg_mode:'7'};
     if($('#fxn').checked)o.tessedit_char_whitelist='0123456789.,-/: ';
     await w.setParameters(o);const r=await w.recognize(c);await w.terminate();
     $('#fxt').value=r.data.text.replace(/\s+/g,' ').trim();fxPrev()}
-  catch(e){toast('Text nahi parha gaya. Khud likh dein.')}
-  b.disabled=false;b.textContent='Dobara parhein'
+  catch(e){toast('Could not read the text. Type it yourself.')}
+  b.disabled=false;b.textContent='Read again'
 }
 function paintFx(x,ox,oy,sc){
   const t=$('#fxt').value,m=$('#fxs').value/100;x.save();x.fillStyle=S.bg;x.fillRect(ox,oy,S.w*sc,S.h*sc);
@@ -316,21 +316,21 @@ function paintFx(x,ox,oy,sc){
 function fxPrev(){const c=$('#fxp');c.width=S.w;c.height=S.h;paintFx(c.getContext('2d'),0,0,1);$('#fxsv').textContent=$('#fxs').value}
 ['fxt','fxf','fxs','fxb'].forEach(i=>$('#'+i).oninput=fxPrev);$('#fxr').onclick=fxRead;
 $('#fxc').onclick=()=>{$('#fx').style.display='none';show()};
-$('#fxo').onclick=()=>{paintFx(P[cur].base.getContext('2d'),S.x,S.y,1);P[cur].v++;$('#fx').style.display='none';show();toast('Text lag gaya')};
+$('#fxo').onclick=()=>{paintFx(P[cur].base.getContext('2d'),S.x,S.y,1);P[cur].v++;$('#fx').style.display='none';show();toast('Text applied')};
 /* ---- PDF / file kholna (laptop par Adobe Reader ki jagah) ---- */
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 async function openPdf(f){
-  try{toast('PDF khul rahi hai...');const data=new Uint8Array(await f.arrayBuffer());let doc;
+  try{toast('Opening PDF...');const data=new Uint8Array(await f.arrayBuffer());let doc;
     try{doc=await pdfjsLib.getDocument({data:data.slice()}).promise}
-    catch(e){if(e.name!=='PasswordException')throw e;const pw=prompt('Is PDF ka password likhein');if(!pw)return;
+    catch(e){if(e.name!=='PasswordException')throw e;const pw=prompt('Enter the password for this PDF');if(!pw)return;
       doc=await pdfjsLib.getDocument({data:data.slice(),password:pw}).promise}
     const n=Math.min(doc.numPages,80);
     for(let i=1;i<=n;i++){const pg=await doc.getPage(i),v0=pg.getViewport({scale:1}),sc=Math.min(3,2200/Math.max(v0.width,v0.height)),
       v=pg.getViewport({scale:sc}),c=mk(Math.round(v.width),Math.round(v.height)),x=c.getContext('2d');
       x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);await pg.render({canvasContext:x,viewport:v}).promise;addPage(c,false)}
     $('#name').value=f.name.replace(/\.pdf$/i,'')+'-edit';
-    toast(doc.numPages>n?'Pehle 80 pages khule':'PDF khul gayi')}
-  catch(e){toast('PDF nahi khuli: '+e.message)}
+    toast(doc.numPages>n?'First 80 pages opened':'PDF opened')}
+  catch(e){toast('Could not open PDF: '+e.message)}
 }
 async function openFile(f){
   if(/pdf$/i.test(f.type)||/\.pdf$/i.test(f.name))return openPdf(f);
@@ -380,12 +380,12 @@ cmp.onpointerdown=()=>{const q=P[cur],o=render({base:q.base,f:'orig',c:q.c,k:50,
 ['pointerup','pointerleave','pointercancel'].forEach(e=>cmp['on'+e]=()=>{if(P.length)show()});
 [['cT',0],['cB',1],['cL',2],['cR',3]].forEach(([id,k])=>$('#'+id).oninput=e=>{P[cur].c[k]=+e.target.value;show()});
 [['sK','k'],['sB','b'],['sD','d']].forEach(([id,k])=>$('#'+id).oninput=e=>{P[cur][k]=+e.target.value;show()});
-$('#bAuto').onclick=()=>{P[cur].c=detect(P[cur].base);show();toast('Auto crop laga. Zarurat ho to sliders se theek karein.')};
+$('#bAuto').onclick=()=>{P[cur].c=detect(P[cur].base);show();toast('Auto crop applied. Adjust with the sliders if needed.')};
 $('#bRot').onclick=()=>{const b=P[cur].base,n=mk(b.height,b.width),x=n.getContext('2d');
   x.translate(n.width/2,n.height/2);x.rotate(Math.PI/2);x.drawImage(b,-b.width/2,-b.height/2);
   P[cur].v++;P[cur].base=n;const[t,bt,l,r]=P[cur].c;P[cur].c=[l,r,bt,t];show()};
 $('#bDel').onclick=()=>{P.splice(cur,1);cur=Math.min(cur,P.length-1);show()};
-$('#bText').onclick=()=>{const t=prompt('Kya likhna hai?');if(!t)return;
+$('#bText').onclick=()=>{const t=prompt('What do you want to write?');if(!t)return;
   const b=P[cur].base,x=b.getContext('2d'),fs=Math.round(b.width/22);
   x.font='600 '+fs+'px system-ui';x.fillStyle='#1b3fd1';x.fillText(t,b.width*.08,b.height*.9);P[cur].v++;show()};
 
@@ -399,7 +399,7 @@ window.onpointerup=()=>dr=false;
 $('#bSign').onclick=()=>{$('#sig').style.display='flex';sz()};
 $('#sClr').onclick=sz;$('#sNo').onclick=()=>$('#sig').style.display='none';
 $('#sOk').onclick=()=>{const b=P[cur].base,w=b.width*.3,h=w*pad.height/pad.width;
-  b.getContext('2d').drawImage(pad,b.width*.62,b.height*.88-h,w,h);$('#sig').style.display='none';P[cur].v++;show();toast('Signature lag gaya')};
+  b.getContext('2d').drawImage(pad,b.width*.62,b.height*.88-h,w,h);$('#sig').style.display='none';P[cur].v++;show();toast('Signature placed')};
 
 /* ---- PDF save ---- */
 function buildPdf(){
@@ -416,36 +416,36 @@ const isApk=()=>!!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNat
 function save(blob,n){
   if(isApk()){const fr=new FileReader();fr.onload=async()=>{try{const Pl=Capacitor.Plugins,
     r=await Pl.Filesystem.writeFile({path:n,data:fr.result.split(',')[1],directory:'CACHE'});
-    await Pl.Share.share({title:n,url:r.uri,dialogTitle:'Save / Share'})}catch(e){toast('Save nahi hua: '+(e.message||e))}};
+    await Pl.Share.share({title:n,url:r.uri,dialogTitle:'Save / Share'})}catch(e){toast('Could not save: '+(e.message||e))}};
     fr.readAsDataURL(blob);return}
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=n;a.click()
 }
-$('#bPdf').onclick=()=>{if(!P.length)return;try{save(buildPdf(),fname());toast('PDF save ho gayi')}catch(e){toast('PDF nahi bani: '+e.message)}};
+$('#bPdf').onclick=()=>{if(!P.length)return;try{save(buildPdf(),fname());toast('PDF saved')}catch(e){toast('Could not create PDF: '+e.message)}};
 $('#bShare').onclick=async()=>{if(!P.length)return;if(isApk())return save(buildPdf(),fname());const f=new File([buildPdf()],fname(),{type:'application/pdf'});
-  if(navigator.canShare&&navigator.canShare({files:[f]}))try{await navigator.share({files:[f]})}catch(e){}else toast('Share is browser mein nahi. Save use karein.')};
+  if(navigator.canShare&&navigator.canShare({files:[f]}))try{await navigator.share({files:[f]})}catch(e){}else toast('Sharing is not supported in this browser. Use Save.')};
 
 /* ---- OCR ---- */
 $('#bOcr').onclick=async()=>{
-  const b=$('#bOcr');b.disabled=true;b.textContent='Parh raha hai...';
+  const b=$('#bOcr');b.disabled=true;b.textContent='Reading...';
   try{const r=await Tesseract.recognize(render(P[cur]),$('#lang').value);$('#txt').value=r.data.text}
-  catch(e){toast('OCR nahi chala. Internet check karein.')}
-  b.disabled=false;b.textContent='Is page ka text nikalein'};
-$('#bCopy').onclick=()=>{navigator.clipboard.writeText($('#txt').value);toast('Copy ho gaya')};
+  catch(e){toast('OCR failed. Check your internet.')}
+  b.disabled=false;b.textContent='Extract text from this page'};
+$('#bCopy').onclick=()=>{navigator.clipboard.writeText($('#txt').value);toast('Copied')};
 
 /* ---- Merge / Split ---- */
 const {PDFDocument}=PDFLib;
 $('#bMerge').onclick=async()=>{
-  const fs=$('#mf').files;if(fs.length<2)return toast('Kam az kam 2 PDF chunein');
+  const fs=$('#mf').files;if(fs.length<2)return toast('Select at least 2 PDFs');
   try{const out=await PDFDocument.create();
     for(const f of fs){const d=await PDFDocument.load(await f.arrayBuffer());(await out.copyPages(d,d.getPageIndices())).forEach(p=>out.addPage(p))}
-    save(new Blob([await out.save()],{type:'application/pdf'}),'Merged.pdf');toast('Merge ho gayi')}
-  catch(e){toast('Merge nahi hui (password wali PDF nahi chalti)')}};
+    save(new Blob([await out.save()],{type:'application/pdf'}),'Merged.pdf');toast('Merged')}
+  catch(e){toast('Merge failed (password-protected PDFs are not supported)')}};
 $('#bSplit').onclick=async()=>{
-  const f=$('#sf').files[0],r=$('#rng').value;if(!f||!r)return toast('PDF aur pages likhein');
+  const f=$('#sf').files[0],r=$('#rng').value;if(!f||!r)return toast('Choose a PDF and enter pages');
   try{const d=await PDFDocument.load(await f.arrayBuffer()),n=d.getPageCount(),ix=[];
     r.split(',').forEach(s=>{const[a,b]=s.trim().split('-').map(Number);for(let i=a;i<=(b||a);i++)if(i>=1&&i<=n)ix.push(i-1)});
-    if(!ix.length)return toast('Pages theek nahi hain');
+    if(!ix.length)return toast('Invalid page numbers');
     const out=await PDFDocument.create();(await out.copyPages(d,ix)).forEach(p=>out.addPage(p));
-    save(new Blob([await out.save()],{type:'application/pdf'}),'Split.pdf');toast('Split ho gayi')}
-  catch(e){toast('Split nahi hui')}};
+    save(new Blob([await out.save()],{type:'application/pdf'}),'Split.pdf');toast('Split done')}
+  catch(e){toast('Split failed')}};
 </script></body></html>
