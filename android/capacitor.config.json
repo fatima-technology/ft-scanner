@@ -1,1 +1,12 @@
-{"appId":"com.fatimatech.scanner","appName":"FT Scanner","webDir":"www"}
+{
+ "appId": "com.fatimatech.scanner",
+ "appName": "FT Scanner",
+ "webDir": "www",
+ "server": {
+  "url": "https://fatima-technology.github.io/ft-scanner/",
+  "allowNavigation": [
+   "fatima-technology.github.io"
+  ],
+  "errorPath": "offline.html"
+ }
+}

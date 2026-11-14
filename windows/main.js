@@ -1,11 +1,14 @@
 const {app,BrowserWindow}=require('electron'),fs=require('fs'),path=require('path');
+const SITE='https://fatima-technology.github.io/ft-scanner/';
 let win;
 const fileArg=a=>a.slice(1).find(x=>/\.(pdf|jpe?g|png)$/i.test(x)&&fs.existsSync(x));
 function send(p){if(!p||!win)return;win.webContents.send('ft-file',{name:path.basename(p),data:fs.readFileSync(p)})}
 function create(){
-  win=new BrowserWindow({width:1200,height:850,title:'FT Scanner',webPreferences:{preload:path.join(__dirname,'preload.js')}});
-  win.removeMenu();win.loadFile('index.html');
-  win.webContents.on('did-finish-load',()=>send(fileArg(process.argv)));
+  win=new BrowserWindow({width:1200,height:850,title:'FT Scanner',icon:path.join(__dirname,'build','icon.png'),webPreferences:{preload:path.join(__dirname,'preload.js')}});
+  win.removeMenu();
+  win.loadURL(SITE);
+  win.webContents.on('did-fail-load',(e,code,desc,url,isMain)=>{if(isMain&&code!==-3)win.loadFile('offline.html')});
+  win.webContents.on('did-finish-load',()=>{if(win.webContents.getURL().startsWith(SITE))send(fileArg(process.argv))});
 }
 if(!app.requestSingleInstanceLock())app.quit();
 else{

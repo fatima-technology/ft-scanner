@@ -1,6 +1,49 @@
-{"name":"ft-scanner","version":"1.0.0","description":"FATIMA-TECH Scanner and PDF Editor","author":"FATIMA-TECH","main":"main.js",
-"scripts":{"start":"electron .","dist":"electron-builder --win --publish never"},
-"devDependencies":{"electron":"^31.0.0","electron-builder":"^24.13.3"},
-"build":{"appId":"com.fatimatech.scanner","productName":"FT Scanner","files":["main.js","preload.js","index.html"],
-"win":{"target":"nsis"},"nsis":{"oneClick":false,"allowToChangeInstallationDirectory":true},
-"fileAssociations":[{"ext":"pdf","name":"PDF","role":"Editor"},{"ext":"jpg","name":"JPG","role":"Editor"},{"ext":"png","name":"PNG","role":"Editor"}]}}
+{
+ "name": "ft-scanner",
+ "version": "1.0.0",
+ "description": "FATIMA-TECH Scanner and PDF Editor",
+ "author": "FATIMA-TECH",
+ "main": "main.js",
+ "scripts": {
+  "start": "electron .",
+  "dist": "electron-builder --win --publish never"
+ },
+ "devDependencies": {
+  "electron": "^31.0.0",
+  "electron-builder": "^24.13.3"
+ },
+ "build": {
+  "appId": "com.fatimatech.scanner",
+  "productName": "FT Scanner",
+  "files": [
+   "main.js",
+   "preload.js",
+   "offline.html",
+   "build/icon.png"
+  ],
+  "win": {
+   "target": "nsis"
+  },
+  "nsis": {
+   "oneClick": false,
+   "allowToChangeInstallationDirectory": true
+  },
+  "fileAssociations": [
+   {
+    "ext": "pdf",
+    "name": "PDF",
+    "role": "Editor"
+   },
+   {
+    "ext": "jpg",
+    "name": "JPG",
+    "role": "Editor"
+   },
+   {
+    "ext": "png",
+    "name": "PNG",
+    "role": "Editor"
+   }
+  ]
+ }
+}
