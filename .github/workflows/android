@@ -18,6 +18,8 @@ jobs:
           java-version: 17
       - run: npm install
       - run: npx cap add android
+      - run: npm install --no-save @capacitor/assets
+      - run: npx capacitor-assets generate --android --iconBackgroundColor '#0f8a80'
       - run: sed -i 's#<application#<uses-permission android:name="android.permission.CAMERA" />\n    <application#' android/app/src/main/AndroidManifest.xml
       - run: npx cap sync android
       - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
